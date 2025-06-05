@@ -1,0 +1,247 @@
+1. Cliente
+
+Descrição: Representa os usuários do sistema que fazem agendamentos.
+Campos:
+
+ClienteID (INT, PK): Identificador único do cliente.
+
+Nome (VARCHAR(100)): Primeiro nome do cliente.
+
+Sobrenome (VARCHAR(100)): Último nome do cliente.
+
+Telefone (VARCHAR(15)): Número de telefone para contato.
+
+Email (VARCHAR(100)): Endereço eletrônico do cliente.
+
+RG (VARCHAR(20)): Registro Geral, documento de identidade.
+
+CPF (VARCHAR(14)): Cadastro de Pessoa Física.
+
+DataNascimento (DATE): Data de nascimento do cliente.
+
+Status (BIT): Indica se o cliente está ativo (1) ou inativo (0).
+
+Relacionamentos:
+
+(1:N) com Agendamento
+
+(1:N) com EquipamentoCliente
+
+2. Agendamento
+
+Descrição: Reserva de um espaço para um tipo de serviço.
+Campos:
+
+AgendamentoID (INT, PK): Identificador do agendamento.
+
+ClienteID (INT, FK): Referência ao cliente que realiza o agendamento.
+
+TipoServicoID (INT, FK): Serviço escolhido no agendamento.
+
+EspacoID (INT, FK): Local do estúdio reservado.
+
+DataHoraInicio (DATETIME): Data e hora de início da reserva.
+
+DataHoraFim (DATETIME): Data e hora de término da reserva.
+
+Observacoes (TEXT, NULL): Campo livre para anotações do cliente.
+
+Status (VARCHAR(20)): Estado atual do agendamento (Pendente, Confirmado, Cancelado, Concluído).
+
+Relacionamentos:
+
+(N:1) com Cliente
+
+(N:1) com TipoServico
+
+(N:1) com Espaco
+
+(1:N) com AgendamentoEquipamento
+
+(1:N) com AgendamentoFuncionario
+
+3. TipoServico
+
+Descrição: Serviços oferecidos pelo estúdio.
+Campos:
+
+TipoServicoID (INT, PK): Identificador do serviço.
+
+Nome (VARCHAR(100)): Nome do serviço (ex: Gravação de Podcast).
+
+TempoEstimadoMinutos (INT): Duração padrão do serviço.
+
+CategoriaID (INT, FK): Categoria à qual o serviço pertence.
+
+Relacionamentos:
+
+(1:N) com Agendamento
+
+(N:1) com Categoria
+
+4. Categoria
+
+Descrição: Agrupamento dos serviços por área.
+Campos:
+
+CategoriaID (INT, PK): Identificador da categoria.
+
+Nome (VARCHAR(100)): Nome da categoria (ex: Música).
+
+Relacionamentos:
+
+(1:N) com TipoServico
+
+5. Espaco
+
+Descrição: Locais disponíveis para reserva.
+Campos:
+
+EspacoID (INT, PK): Identificador do espaço.
+
+Nome (VARCHAR(100)): Nome do estúdio.
+
+Tipo (VARCHAR(50)): Tipo do espaço (ex: Estúdio de Podcast).
+
+Capacidade (INT): Quantidade máxima de pessoas ou equipamentos suportados.
+
+Localizacao (VARCHAR(200)): Endereço ou referência do espaço.
+
+Relacionamentos:
+
+(1:N) com Agendamento
+
+6. Equipamento
+
+Descrição: Recursos físicos do estúdio.
+Campos:
+
+EquipamentoID (INT, PK): Identificador do equipamento.
+
+Nome (VARCHAR(100)): Nome do equipamento (ex: Câmera DSLR).
+
+Descricao (TEXT): Descrição técnica ou observações úteis.
+
+QuantidadeTotal (INT): Quantidade total disponível no estúdio.
+
+EmManutencao (BIT): Indica se o item está disponível (0) ou em manutenção (1).
+
+Relacionamentos:
+
+(1:N) com AgendamentoEquipamento
+
+7. AgendamentoEquipamento
+
+Descrição: Equipamentos solicitados em um agendamento.
+Campos:
+
+AgendamentoEquipamentoID (INT, PK): Identificador da relação.
+
+AgendamentoID (INT, FK): Referência ao agendamento.
+
+EquipamentoID (INT, FK): Referência ao equipamento.
+
+QuantidadeSolicitada (INT): Número de unidades solicitadas.
+
+Relacionamentos:
+
+(N:1) com Agendamento
+
+(N:1) com Equipamento
+
+8. EquipamentoCliente
+
+Descrição: Equipamentos próprios registrados pelos clientes.
+Campos:
+
+EquipamentoClienteID (INT, PK): Identificador do equipamento.
+
+ClienteID (INT, FK): Dono do equipamento.
+
+Nome (VARCHAR(100)): Nome do equipamento pessoal.
+
+Descricao (TEXT): Detalhes adicionais fornecidos pelo cliente.
+
+Relacionamentos:
+
+(N:1) com Cliente
+
+9. Funcionario
+
+Descrição: Profissionais que atuam nos serviços.
+Campos:
+
+FuncionarioID (INT, PK): Identificador do funcionário.
+
+Nome (VARCHAR(100)): Nome completo.
+
+Funcao (VARCHAR(100)): Cargo ou papel desempenhado (ex: Fotógrafo).
+
+Especialidade (VARCHAR(100)): Área específica de atuação (ex: Podcast, Fotografia).
+
+Descricao (TEXT): Informações adicionais, como experiência ou certificações.
+
+RG (VARCHAR(20)): Documento de identidade.
+
+CPF (VARCHAR(14)): Cadastro de Pessoa Física.
+
+DataNascimento (DATE): Data de nascimento do funcionário.
+
+Telefone (VARCHAR(15)): Contato do funcionário.
+
+Email (VARCHAR(100)): E-mail de contato.
+
+Status (BIT): Indica se está ativo (1) ou inativo (0).
+
+Relacionamentos:
+
+(1:N) com AgendamentoFuncionario
+
+(N:N) com Equipe via FuncionarioEquipe
+
+10. Equipe
+
+Descrição: Grupos de profissionais.
+Campos:
+
+EquipeID (INT, PK): Identificador da equipe.
+
+Nome (VARCHAR(100)): Nome da equipe (ex: Equipe de Vídeo).
+
+Relacionamentos:
+
+(N:N) com Funcionario via FuncionarioEquipe
+
+11. FuncionarioEquipe
+
+Descrição: Relação entre funcionários e equipes (N:N).
+Campos:
+
+FuncionarioEquipeID (INT, PK): Identificador da relação.
+
+FuncionarioID (INT, FK): Referência ao funcionário.
+
+EquipeID (INT, FK): Referência à equipe.
+
+Relacionamentos:
+
+(N:1) com Funcionario
+
+(N:1) com Equipe
+
+12. AgendamentoFuncionario
+
+Descrição: Profissionais vinculados a um agendamento.
+Campos:
+
+AgendamentoFuncionarioID (INT, PK): Identificador da relação.
+
+AgendamentoID (INT, FK): Referência ao agendamento.
+
+FuncionarioID (INT, FK): Profissional atribuído.
+
+Relacionamentos:
+
+(N:1) com Agendamento
+
+(N:1) com Funcionario

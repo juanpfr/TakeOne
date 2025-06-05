@@ -1,0 +1,55 @@
+1. Cadastro e Acesso do Cliente
+    RN01 – Todo cliente deve estar cadastrado para realizar agendamentos.
+
+    RN02 – O cliente deve informar nome, sobrenome, telefone, e-mail RG, CPF e data de nascimento válidos no momento do cadastro.
+
+    RN03 – O cliente deve estar com o status ativo para poder agendar.
+
+2. Agendamento
+    RN04 – O cliente pode agendar um horário para utilizar um espaço (estúdio), desde que o espaço esteja disponível naquele horário.
+
+    RN05 – Um agendamento deve conter: tipo de serviço, data e hora, espaço desejado, equipe solicitada (opcional), e equipamentos necessários.
+
+    RN06 – Não é permitido dois agendamentos para o mesmo espaço, na mesma data e hora.
+
+    RN07 – O sistema deve permitir apenas agendamentos futuros (não pode agendar no passado).
+
+    RN08 – O cliente pode incluir observações no agendamento (opcional).
+
+3. Tipos de Serviço
+    RN09 – Os serviços disponíveis devem estar previamente cadastrados pelo administrador (ex: ensaio fotográfico, gravação de podcast, gravação musical).
+
+    RN10 – Cada serviço deve ter um tempo estimado padrão, que será usado para validar conflitos de horário.
+
+    RN11 – Cada serviço pertence a uma categoria (ex: audiovisual, fotografia, música).
+
+4. Espaços (Estúdios)
+    RN12 – Cada espaço possui nome, tipo, capacidade e localização.
+
+    RN13 – Um espaço só pode ser reservado se não estiver ocupado no horário solicitado.
+
+    RN14 – O sistema deve validar a capacidade do espaço conforme os equipamentos ou equipe solicitados, se aplicável.
+
+5. Equipamentos
+    RN15 – O cliente pode solicitar equipamentos durante o agendamento (ex: microfone, câmera).
+
+    RN16 – Cada equipamento possui um controle de quantidade; o sistema deve validar se há disponibilidade para o horário solicitado.
+
+    RN17 – Equipamentos em manutenção não devem estar disponíveis para agendamento.
+
+6. Equipe
+    RN18 – O cliente pode solicitar profissionais para o agendamento (ex: fotógrafo, técnico de som).
+
+    RN19 – Cada funcionário pertence a uma equipe e só pode participar de um agendamento por horário.
+
+    RN20 – Apenas funcionários ativos podem ser atribuídos a agendamentos.
+
+7. Relacionamento com Equipamento do Cliente
+    RN21 – Clientes podem registrar equipamentos próprios no sistema (ex: câmera pessoal).
+
+    RN22 – Equipamentos do cliente não impactam na disponibilidade dos equipamentos do estúdio.
+
+8. Cancelamento e Status
+    RN23 – Um agendamento pode ter os status: “Pendente”, “Confirmado”, “Cancelado”, “Concluído”.
+
+    RN24 – O cliente pode cancelar um agendamento com antecedência mínima (ex: 24h antes).

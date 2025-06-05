@@ -1,0 +1,58 @@
+🧩 1. Pré-Requisitos
+Antes de um agendamento ser criado, o sistema verifica:
+
+Cadastro do cliente (RN01, RN02): O cliente precisa estar com os dados completos e válidos.
+
+Status do cliente (RN03): O cliente deve estar ativo (Status = 1).
+
+📅 2. Criando um Agendamento (Agendamento)
+O cliente solicita:
+
+Tipo de serviço (TipoServicoID) → ex: Ensaio fotográfico (RN05, RN09)
+
+Espaço desejado (EspacoID) → ex: Estúdio A (RN04, RN06, RN13)
+
+Data e hora de início/fim → (RN07, RN10)
+
+Observações → Campo opcional (RN08)
+
+O sistema:
+
+Garante que não exista outro agendamento no mesmo espaço e horário (RN06).
+
+Calcula a duração com base no tipo de serviço (TempoEstimadoMinutos).
+
+Valida se a data e hora são futuras (RN07).
+
+Verifica a disponibilidade do espaço (Espaco.Capacidade, RN14).
+
+🎧 3. Equipamentos no Agendamento (AgendamentoEquipamento)
+O cliente pode solicitar equipamentos:
+
+O sistema verifica se há quantidade suficiente disponível e não em manutenção (RN15, RN16, RN17).
+
+Os equipamentos são registrados com a quantidade solicitada.
+
+👥 4. Profissionais no Agendamento (AgendamentoFuncionario)
+Se o cliente solicitar uma equipe:
+
+Profissionais são atribuídos manualmente ou com base na equipe desejada (RN18).
+
+Apenas funcionários ativos e disponíveis no horário podem ser associados (RN19, RN20).
+
+🧳 5. Equipamentos do Cliente (EquipamentoCliente)
+O cliente pode registrar seus próprios equipamentos (ex: câmera pessoal).
+
+Esses não afetam o controle de estoque do estúdio (RN21, RN22).
+
+🔁 6. Status do Agendamento
+O campo Status reflete a situação atual (RN23):
+
+Pendente: Aguardando confirmação.
+
+Confirmado: Validado e reservado.
+
+Cancelado: Cancelado pelo cliente (mínimo 24h antes – RN24).
+
+Concluído: Serviço realizado.
+
