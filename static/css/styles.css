@@ -75,4 +75,46 @@ body{
 .main-section{
     background-image: url(/static/images/banners/main_banner.png);
     height: 680px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.up-main-content{
+    font-size: 10em;
+    font-weight: 900;
+}
+
+.up-main-content h1{
+    color: #98C1D4;
+}
+
+.up-main-content h2:nth-child(2){
+    color: #BC98D4;
+    margin-left: 200px;
+}
+
+.up-main-content h2:nth-child(3){
+    color: #A998D4;
+    margin-left: 100px;
+}
+
+.right-main-content img{
+    border: 5px solid #BC98D4;
+    height: 610px;
+}
+
+.down-main-content{
+    display: flex;
+    justify-content: end;
+}
+
+.down-main-content a{
+    padding: 10px 20px;
+    color: white;
+    background: #686868;
+    border: 3px solid #BC98D4;
+    margin-top: 50px;
+    border-radius: 25px;
 }
