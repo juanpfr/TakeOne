@@ -670,8 +670,7 @@ textarea {
 
 .footer-bottom {
     text-align: center;
-    border-top: 1px solid #111;
-    margin-top: 30px;
-    padding-top: 20px;
+    padding: 20px;
     font-size: 14px;
+    background-color: black;
 }
