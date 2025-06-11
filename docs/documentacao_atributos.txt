@@ -1,0 +1,120 @@
+Documentação dos Atributos das Entidades - Banco de Dados db_takeone
+
+---
+
+tbl_cliente
+- id_cliente (INT, PK, IDENTITY): Identificador único do cliente.
+- nome (VARCHAR(100)): Nome do cliente.
+- sobrenome (VARCHAR(100)): Sobrenome do cliente.
+- telefone (VARCHAR(15)): Telefone de contato do cliente.
+- email (VARCHAR(100)): Email do cliente.
+- senha (VARCHAR(100)): Senha para acesso do cliente.
+- rg (VARCHAR(20)): Registro Geral do cliente.
+- cpf (VARCHAR(14)): CPF do cliente.
+- data_nascimento (DATE): Data de nascimento do cliente.
+- data_cadastro (DATETIME, default GETDATE()): Data e hora do cadastro.
+- status (VARCHAR(20), default 'ATIVO'): Status do cliente (ATIVO, INATIVO, DESATIVADO).
+
+---
+
+tbl_agendamento
+- id_agendamento (INT, PK, IDENTITY): Identificador único do agendamento.
+- id_cliente (INT, FK): Referência ao cliente.
+- id_tipo_servico (INT, FK): Tipo de serviço agendado.
+- id_espaco (INT, FK): Espaço reservado.
+- data_hora_inicio (DATETIME): Data e hora do início.
+- data_hora_fim (DATETIME): Data e hora do fim.
+- observacoes (TEXT, nullable): Observações adicionais.
+- status (VARCHAR(20), default 'PENDENTE'): Status (PENDENTE, CONFIRMADO, CANCELADO, CONCLUIDO).
+
+---
+
+tbl_tipo_servico
+- id_tipo_servico (INT, PK, IDENTITY): Identificador do tipo de serviço.
+- nome (VARCHAR(100)): Nome do serviço.
+- tempo_estimado_minutos (INT): Tempo estimado em minutos.
+- id_categoria (INT, FK): Categoria do serviço.
+
+---
+
+tbl_categoria
+- id_categoria (INT, PK, IDENTITY): Identificador da categoria.
+- nome (VARCHAR(100)): Nome da categoria.
+
+---
+
+tbl_espaco
+- id_espaco (INT, PK, IDENTITY): Identificador do espaço.
+- nome (VARCHAR(100)): Nome do espaço.
+- tipo (VARCHAR(50)): Tipo do espaço.
+- capacidade (INT): Capacidade máxima.
+- localizacao (VARCHAR(200)): Localização física.
+
+---
+
+tbl_equipamento
+- id_equipamento (INT, PK, IDENTITY): Identificador do equipamento.
+- nome (VARCHAR(100)): Nome do equipamento.
+- descricao (TEXT): Descrição detalhada.
+- quantidade_total (INT): Quantidade total disponível.
+- em_manutencao (VARCHAR(20), default 'NAO'): Indica se está em manutenção (SIM, NAO).
+
+---
+
+tbl_agendamento_equipamento
+- id_agendamento_equipamento (INT, PK, IDENTITY): Identificador da relação.
+- id_agendamento (INT, FK): Referência ao agendamento.
+- id_equipamento (INT, FK): Referência ao equipamento.
+- quantidade_solicitada (INT): Quantidade solicitada.
+
+---
+
+tbl_equipamento_cliente
+- id_equipamento_cliente (INT, PK, IDENTITY): Identificador do equipamento do cliente.
+- id_cliente (INT, FK): Cliente proprietário.
+- nome (VARCHAR(100)): Nome do equipamento.
+- descricao (TEXT): Descrição do equipamento.
+
+---
+
+tbl_funcionario
+- id_funcionario (INT, PK, IDENTITY): Identificador do funcionário.
+- nome (VARCHAR(100)): Nome do funcionário.
+- funcao (VARCHAR(100)): Função exercida.
+- especialidade (VARCHAR(100)): Especialidade.
+- descricao (TEXT, nullable): Descrição adicional.
+- rg (VARCHAR(20)): Registro Geral.
+- cpf (VARCHAR(14)): CPF.
+- data_nascimento (DATE): Data de nascimento.
+- telefone (VARCHAR(15)): Telefone.
+- email (VARCHAR(100)): Email.
+- status (VARCHAR(20), default 'ATIVO'): Status (ATIVO, INATIVO, DESATIVADO).
+
+---
+
+tbl_equipe
+- id_equipe (INT, PK, IDENTITY): Identificador da equipe.
+- nome (VARCHAR(100)): Nome da equipe.
+
+---
+
+tbl_funcionario_equipe
+- id_funcionario_equipe (INT, PK, IDENTITY): Identificador da relação funcionário-equipe.
+- id_funcionario (INT, FK): Funcionário.
+- id_equipe (INT, FK): Equipe.
+
+---
+
+tbl_agendamento_funcionario
+- id_agendamento_funcionario (INT, PK, IDENTITY): Identificador da relação agendamento-funcionário.
+- id_agendamento (INT, FK): Agendamento.
+- id_funcionario (INT, FK): Funcionário.
+
+---
+
+tbl_contato
+- id_contato (INT, PK, IDENTITY): Identificador da mensagem.
+- nome (VARCHAR(100)): Nome da pessoa.
+- sobrenome (VARCHAR(100)): Sobrenome.
+- email (VARCHAR(100)): Email.
+- mensagem (TEXT): Conteúdo da mensagem.

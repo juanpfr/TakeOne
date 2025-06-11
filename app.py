@@ -31,8 +31,6 @@ def enviar():
     email = request.form['email']
     mensagem = request.form['mensagem']
 
-
-
     try:
         # Abre a conexão com o banco usando a string de conexão definida
         conn = pyodbc.connect(conn_str)
@@ -54,6 +52,38 @@ def enviar():
 
     except Exception as e:
         # Em caso de erro, exibe o erro no navegador
+        return f"<h2>Erro ao salvar no banco:</h2><pre>{e}</pre>"
+
+@app.route('/cadastro')
+def cadastro():
+    return render_template('cadastro.html')
+
+@app.route('/cadastrar', methods=['POST'])
+def cadastrar():
+    nome = request.form['nome']
+    sobrenome = request.form['sobrenome']
+    telefone = request.form['telefone']
+    email = request.form['email']
+    senha = request.form['senha']
+    rg = request.form['rg']
+    cpf = request.form['cpf']
+    data_nascimento = request.form['data_nascimento']
+
+    try:
+        conn = pyodbc.connect(conn_str)
+        cursor = conn.cursor()
+
+        cursor.execute("INSERT INTO tbl_cliente (nome, sobrenome, telefone, email, senha, rg, cpf, data_nascimento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                       (nome, sobrenome, telefone, email, senha, rg, cpf, data_nascimento))
+        
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        return f"<h2>Dados salvos com sucesso!</h2><a href='/'>Voltar</a>"
+    
+    except Exception as e:
         return f"<h2>Erro ao salvar no banco:</h2><pre>{e}</pre>"
 
 # Iniciar o servidor Flask em modo debug
