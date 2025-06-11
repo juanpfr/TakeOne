@@ -1,7 +1,7 @@
 1. Cadastro e Acesso do Cliente
     RN01 – Todo cliente deve estar cadastrado para realizar agendamentos.
 
-    RN02 – O cliente deve informar nome, sobrenome, telefone, e-mail RG, CPF e data de nascimento válidos no momento do cadastro.
+    RN02 – O cliente deve informar nome, sobrenome, telefone, e-mail, senha, RG, CPF e data de nascimento válidos no momento do cadastro.
 
     RN03 – O cliente deve estar com o status ativo para poder agendar.
 
