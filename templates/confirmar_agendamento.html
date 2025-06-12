@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmar Agendamento</title>
+
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/agendar.css">
+</head>
+<body>
+  <div class="login-container">
+    <h2>Confirmação do Agendamento</h2>
+    <p><strong>Data:</strong> {{ session['data'] }}</p>
+    <p><strong>Hora:</strong> {{ session['hora'] }}</p>
+    <p><strong>ID do Espaço:</strong> {{ session['espaco_id'] }}</p>
+    <p><strong>ID do Serviço:</strong> {{ session['servico_id'] }}</p>
+
+    <p><strong>Equipe selecionada:</strong></p>
+    <ul>
+      {% for nome in funcionarios %}
+        <li>{{ nome }}</li>
+      {% endfor %}
+    </ul>
+
+    <p><strong>Equipamentos selecionados:</strong></p>
+    <ul>
+      {% for nome in equipamentos %}
+        <li>{{ nome }}</li>
+      {% endfor %}
+    </ul>
+
+    <form method="post">
+      <button type="submit" class="login-btn">Confirmar</button>
+    </form>
+    <a href="{{ url_for('agendar_equipamentos') }}" class="back-link">Voltar</a>
+  </div>
+</body>
+</html>

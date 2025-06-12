@@ -11,6 +11,16 @@ body {
     font-weight: 500;
 }
 
+.feedback{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: green;
+    color: white;
+    font-size: 1.2em;
+    height: 30px;
+}
+
 /* Faixa do topo */
 .top-lane {
     background: black;
@@ -54,6 +64,11 @@ body {
     display: flex;
     gap: 30px;
     align-items: center;
+}
+
+.navbar p{
+    font-size: 1.4em;
+    color: black;
 }
 
 .navbar div a {

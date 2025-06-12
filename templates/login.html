@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+<<<<<<< HEAD
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -181,3 +182,59 @@
   </div>
 </body>
 </html>
+=======
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Takeone</title>
+
+    <!-- Reset CSS -->
+    <link rel="stylesheet" href="/static/css/reset.css">
+
+    <!-- Fonte -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Manrope -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/login.css">
+</head>
+
+<body>
+    <div class="back-button">
+        <a href="/"><button>&larr;</button></a>
+    </div>
+
+    <div class="login-container">
+        <div class="logo">
+            <img src="/static/images/logos/takeone.png" alt="TakeOne">
+        </div>
+
+        <form method="POST">
+            <input type="email" name="email" placeholder="Email ou nome de usuário" class="input" required>
+            <input type="password" name="senha" placeholder="Senha" class="input" required>
+            <button type="submit" class="login-btn">LOGIN</button>
+        </form>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-message">
+            {% for category, message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <div class="forgot-password">
+            Esqueceu sua senha?<br>
+            <a href="#">Clique Aqui</a>
+        </div>
+    </div>
+</body>
+
+</html>
+>>>>>>> 7c137dd7fc235a3b9d304688c5d45e87eb5f18be

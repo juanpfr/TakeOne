@@ -2,11 +2,16 @@ from flask import Flask, request, render_template, redirect, url_for, session, f
 import pyodbc
 from dotenv import load_dotenv
 import os
+from datetime import datetime
 
 load_dotenv()
 
 app = Flask(__name__)
+<<<<<<< HEAD
 app.secret_key = 'sua_chave_secreta'  # Necessária para sessões (login)
+=======
+app.secret_key = f"SERVER={os.getenv('SECRET_KEY')};"  # Necessária para sessões (login)
+>>>>>>> 7c137dd7fc235a3b9d304688c5d45e87eb5f18be
 
 # Conexão com o SQL Server
 conn_str = (
@@ -49,7 +54,11 @@ def login():
                 if cliente.status == 'ATIVO':
                     session['id_cliente'] = cliente.id_cliente
                     session['nome'] = cliente.nome
+<<<<<<< HEAD
                     return redirect(url_for('dashboard'))
+=======
+                    return redirect(url_for('index'))
+>>>>>>> 7c137dd7fc235a3b9d304688c5d45e87eb5f18be
                 else:
                     flash('Conta inativa ou desativada.', 'erro')
             else:
@@ -60,6 +69,7 @@ def login():
 
     return render_template('login.html')
 
+<<<<<<< HEAD
 # Página protegida
 @app.route('/dashboard')
 def dashboard():
@@ -68,11 +78,17 @@ def dashboard():
     else:
         return redirect(url_for('login'))
 
+=======
+>>>>>>> 7c137dd7fc235a3b9d304688c5d45e87eb5f18be
 # Logout
 @app.route('/logout')
 def logout():
     session.clear()
+<<<<<<< HEAD
     return redirect(url_for('login'))
+=======
+    return redirect(url_for('index'))
+>>>>>>> 7c137dd7fc235a3b9d304688c5d45e87eb5f18be
 
 # Formulário de contato
 @app.route('/enviar', methods=['POST'])
@@ -90,10 +106,19 @@ def enviar():
         conn.commit()
         cursor.close()
         conn.close()
+<<<<<<< HEAD
         return f"<h2>Dados salvos com sucesso!</h2><a href='/'>Voltar</a>"
     except Exception as e:
         return f"<h2>Erro ao salvar no banco:</h2><pre>{e}</pre>"
 
+=======
+        flash('Contato enviado com sucesso!')
+    except Exception as e:
+        flash(f'Erro ao enviar o contato: {e}')
+
+    return redirect(url_for('index'))
+
+>>>>>>> 7c137dd7fc235a3b9d304688c5d45e87eb5f18be
 # Formulário de cadastro
 @app.route('/cadastro')
 def cadastro():
@@ -119,12 +144,190 @@ def cadastrar():
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """, (nome, sobrenome, telefone, email, senha, rg, cpf, data_nascimento))
         conn.commit()
+<<<<<<< HEAD
         cursor.close()
         conn.close()
         return f"<h2>Cadastro realizado com sucesso!</h2><a href='/'>Voltar</a>"
+=======
+        cursor.close()
+        conn.close()
+        flash('Conta criada com sucesso!')
     except Exception as e:
-        return f"<h2>Erro ao salvar no banco:</h2><pre>{e}</pre>"
+        flash(f'Erro criar a conta: {e}')
 
+    return redirect(url_for('index'))
+
+
+# Início do fluxo de agendamento (após login obrigatório)
+@app.route('/agendar', methods=['GET', 'POST'])
+def agendar_datahora():
+    if 'id_cliente' not in session:
+        flash("Faça login para agendar.", "erro")
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        session['data'] = request.form['data']
+        session['hora'] = request.form['hora']
+        return redirect(url_for('agendar_espaco'))
+
+    return render_template('agendar_datahora.html')
+
+@app.route('/agendar/espaco', methods=['GET', 'POST'])
+def agendar_espaco():
+    try:
+        conn = pyodbc.connect(conn_str)
+        cursor = conn.cursor()
+        cursor.execute("SELECT id_espaco, nome FROM tbl_espaco")
+        espacos = cursor.fetchall()
+        conn.close()
+    except Exception as e:
+        return f"<h2>Erro ao carregar espaços:</h2><pre>{e}</pre>"
+
+    if request.method == 'POST':
+        session['espaco_id'] = request.form['espaco_id']
+        return redirect(url_for('agendar_servico'))
+
+    return render_template('agendar_espaco.html', espacos=espacos)
+
+@app.route('/agendar/servico', methods=['GET', 'POST'])
+def agendar_servico():
+    try:
+        conn = pyodbc.connect(conn_str)
+        cursor = conn.cursor()
+        cursor.execute("SELECT id_tipo_servico, nome FROM tbl_tipo_servico")
+        servicos = cursor.fetchall()
+        conn.close()
+    except Exception as e:
+        return f"<h2>Erro ao carregar espaços:</h2><pre>{e}</pre>"
+
+    if request.method == 'POST':
+        session['servico_id'] = request.form['servico_id']
+        return redirect(url_for('agendar_funcionarios'))
+
+    return render_template('agendar_servico.html', servicos=servicos)
+
+@app.route('/agendar/funcionarios', methods=['GET', 'POST'])
+def agendar_funcionarios():
+    try:
+        conn = pyodbc.connect(conn_str)
+        cursor = conn.cursor()
+        cursor.execute("SELECT id_funcionario, nome FROM tbl_funcionario")
+        funcionarios = cursor.fetchall()
+        conn.close()
+    except Exception as e:
+        return f"<h2>Erro ao carregar funcionários:</h2><pre>{e}</pre>"
+
+    if request.method == 'POST':
+        session['funcionarios_ids'] = request.form.getlist('funcionarios')
+        return redirect(url_for('agendar_equipamentos'))
+
+    return render_template('agendar_funcionarios.html', funcionarios=funcionarios)
+
+@app.route('/agendar/equipamentos', methods=['GET', 'POST'])
+def agendar_equipamentos():
+    try:
+        conn = pyodbc.connect(conn_str)
+        cursor = conn.cursor()
+        cursor.execute("SELECT id_equipamento, nome FROM tbl_equipamento")
+        equipamentos = cursor.fetchall()
+        conn.close()
+    except Exception as e:
+        return f"<h2>Erro ao carregar equipamentos:</h2><pre>{e}</pre>"
+
+    if request.method == 'POST':
+        session['equipamentos_ids'] = request.form.getlist('equipamentos')
+        return redirect(url_for('confirmar_agendamento'))
+
+    return render_template('agendar_equipamentos.html', equipamentos=equipamentos)
+
+@app.route('/agendar/confirmar', methods=['GET', 'POST'])
+def confirmar_agendamento():
+    if request.method == 'POST':
+        try:
+            conn = pyodbc.connect(conn_str)
+            cursor = conn.cursor()
+
+            # Junta data e hora da sessão em um único datetime
+            data_str = session['data']        # ex: '2025-06-12'
+            hora_str = session['hora']        # ex: '14:30'
+            data_hora_str = f"{data_str} {hora_str}:00"  # '2025-06-12 14:30:00'
+            data_hora_inicio = datetime.strptime(data_hora_str, '%Y-%m-%d %H:%M:%S')
+
+            # Insere agendamento com datetime combinado
+            cursor.execute("""
+                INSERT INTO tbl_agendamento (id_cliente, id_tipo_servico, id_espaco, data_hora_inicio)
+                VALUES (?, ?, ?, ?)
+            """, (
+                session['id_cliente'],
+                session['servico_id'],
+                session['espaco_id'],
+                data_hora_inicio
+            ))
+            conn.commit()
+
+            # ID do agendamento criado
+            cursor.execute("SELECT id_agendamento FROM tbl_agendamento")
+            id_agendamento = cursor.fetchone()[0]
+
+            # Funcionários
+            for funcionario_id in session.get('funcionarios_ids', []):
+                cursor.execute("""
+                    INSERT INTO tbl_agendamento_funcionario (id_agendamento, id_funcionario)
+                    VALUES (?, ?)
+                """, (id_agendamento, funcionario_id))
+
+            # Equipamentos
+            for equipamento_id in session.get('equipamentos_ids', []):
+                cursor.execute("""
+                    INSERT INTO tbl_agendamento_equipamento (id_agendamento, id_equipamento)
+                    VALUES (?, ?)
+                """, (id_agendamento, equipamento_id))
+
+            conn.commit()
+            cursor.close()
+            conn.close()
+
+            # Limpa sessões temporárias do agendamento
+            session.pop('data', None)
+            session.pop('hora', None)
+            session.pop('espaco_id', None)
+            session.pop('funcionarios_ids', None)
+            session.pop('equipamentos_ids', None)
+
+            flash("Agendamento realizado com sucesso!", "sucesso")
+            return redirect(url_for('index'))
+
+        except Exception as e:
+            return f"<h2>Erro ao confirmar agendamento:</h2><pre>{e}</pre>"
+
+    # Recarregar nomes para exibir na confirmação
+    try:
+        conn = pyodbc.connect(conn_str)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT nome FROM tbl_funcionario WHERE id_funcionario IN ({})".format(
+            ",".join("?" * len(session['funcionarios_ids']))
+        ), session['funcionarios_ids'])
+        funcionarios = [row.nome for row in cursor.fetchall()]
+
+        cursor.execute("SELECT nome FROM tbl_equipamento WHERE id_equipamento IN ({})".format(
+            ",".join("?" * len(session['equipamentos_ids']))
+        ), session['equipamentos_ids'])
+        equipamentos = [row.nome for row in cursor.fetchall()]
+
+        cursor.close()
+        conn.close()
+>>>>>>> 7c137dd7fc235a3b9d304688c5d45e87eb5f18be
+    except Exception as e:
+        return f"<h2>Erro ao carregar dados de confirmação:</h2><pre>{e}</pre>"
+
+<<<<<<< HEAD
+=======
+    return render_template('confirmar_agendamento.html',
+                           funcionarios=funcionarios,
+                           equipamentos=equipamentos)
+
+>>>>>>> 7c137dd7fc235a3b9d304688c5d45e87eb5f18be
 # Rodar o servidor
 if __name__ == '__main__':
     app.run(debug=True)
