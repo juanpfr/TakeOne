@@ -32,6 +32,17 @@ form {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.logo img{
+  width: 150px;
+}
+
 form div {
     margin-bottom: 16px;
 }

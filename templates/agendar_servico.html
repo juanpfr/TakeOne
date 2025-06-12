@@ -1,15 +1,34 @@
 <!DOCTYPE html>
-<html>
-<head><title>Agendar - Serviço</title></head>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar - Serviço</title>
+
+    <!-- Reset CSS -->
+    <link rel="stylesheet" href="/static/css/reset.css">
+
+    <!-- Fonte Manrope -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/agendar.css">
+</head>
 <body>
-    <h2>Escolha um Serviço</h2>
-    <form method="post">
-        {% for servico in servicos %}
-            <input type="radio" name="servico_id" value="{{ servico.id_tipo_servico }}" required> {{ servico.nome }}<br>
-        {% endfor %}
-        <br>
-        <a href="{{ url_for('agendar_espaco') }}">Voltar</a>
-        <button type="submit">Próximo</button>
-    </form>
+    <div class="login-container">
+        <h2>Escolha um Serviço</h2>
+        <form method="post">
+            {% for servico in servicos %}
+                <label class="radio-option">
+                    <input type="radio" name="servico_id" value="{{ servico.id_tipo_servico }}" required>
+                    {{ servico.nome }}
+                </label>
+            {% endfor %}
+            <a href="{{ url_for('agendar_espaco') }}" class="back-link">Voltar</a>
+            <button type="submit" class="login-btn">Próximo</button>
+        </form>
+    </div>
 </body>
 </html>

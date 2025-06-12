@@ -45,6 +45,10 @@ body {
   margin-bottom: 25px;
 }
 
+.logo img{
+  width: 150px;
+}
+
 .logo .box {
   background: black;
   color: white;
