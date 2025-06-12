@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head><title>Confirmar Agendamento</title></head>
+<body>
+    <h2>Confirmação do Agendamento</h2>
+    <p><strong>Data:</strong> {{ session['data'] }}</p>
+    <p><strong>Hora:</strong> {{ session['hora'] }}</p>
+    <p><strong>ID do Espaço:</strong> {{ session['espaco_id'] }}</p>
+    <p><strong>ID do Serviço:</strong> {{ session['servico_id'] }}</p>
+
+    <p><strong>Equipe selecionada:</strong></p>
+    <ul>
+        {% for nome in funcionarios %}
+            <li>{{ nome }}</li>
+        {% endfor %}
+    </ul>
+
+    <p><strong>Equipamentos selecionados:</strong></p>
+    <ul>
+        {% for nome in equipamentos %}
+            <li>{{ nome }}</li>
+        {% endfor %}
+    </ul>
+
+    <form method="post">
+        <button type="submit">Confirmar</button>
+    </form>
+    <br>
+    <a href="{{ url_for('agendar_equipamentos') }}">Voltar</a>
+</body>
+</html>

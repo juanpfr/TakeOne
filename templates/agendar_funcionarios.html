@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title>Agendar - Funcionários</title></head>
+<body>
+    <h2>Escolha Funcionários</h2>
+    <form method="post">
+        {% for funcionario in funcionarios %}
+            <input type="checkbox" name="funcionarios" value="{{ funcionario.id_funcionario }}"> {{ funcionario.nome }}<br>
+        {% endfor %}
+        <br>
+        <a href="{{ url_for('agendar_espaco') }}">Voltar</a>
+        <button type="submit">Próximo</button>
+    </form>
+</body>
+</html>

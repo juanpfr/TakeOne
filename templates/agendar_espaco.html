@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title>Agendar - Espaço</title></head>
+<body>
+    <h2>Escolha um Espaço</h2>
+    <form method="post">
+        {% for espaco in espacos %}
+            <input type="radio" name="espaco_id" value="{{ espaco.id_espaco }}" required> {{ espaco.nome }}<br>
+        {% endfor %}
+        <br>
+        <a href="{{ url_for('agendar_datahora') }}">Voltar</a>
+        <button type="submit">Próximo</button>
+    </form>
+</body>
+</html>

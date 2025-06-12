@@ -17,11 +17,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
 
     <!-- Styles CSS -->
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/index.css">
 </head>
 
 <body>
     <header>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="feedback">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
         <div class="top-lane">
             <p>Sistema de agendamento online.</p>
             <p>Equipamentos modernos de alta qualidade!</p>
@@ -30,19 +39,24 @@
             <img src="/static/images/logos/takeone.png" alt="Logo Take One">
             <ul>
                 <li><a href="/">Início</a></li>
-                <li><a href="/">Serviços</a></li>
-                <li><a href="/">Sobre</a></li>
-                <li><a href="/">Agendamento</a></li>
-                <li><a href="/">Contato</a></li>
+                <li><a href="#services">Serviços</a></li>
+                <li><a href="#about">Sobre</a></li>
+                <li><a href="/agendar">Agendamento</a></li>
+                <li><a href="#contact">Contato</a></li>
             </ul>
             <div>
+                {% if 'id_cliente' in session %}
+                <p>Bem-vindo(a), {{ session['nome'] }}!</p>
+                <a href="/logout">Sair</a>
+                {% else %}
                 <a href="/cadastro">Cadastre-se</a>
                 <a href="/login">Login</a>
+                {% endif %}
             </div>
         </nav>
     </header>
     <main class="main-content">
-        <section class="main-section">
+        <section id="home" class="main-section">
             <div class="left-main-content">
                 <div class="up-main-content">
                     <h1>Take One</h1>
@@ -53,14 +67,14 @@
                     <p>Faça seu agendamento e escolha lugar, data e hora para fazer sua gravaçãodo jeito que quiser!</p>
                 </div>
                 <div class="down-main-content">
-                    <a href="">Agendar agora!</a>
+                    <a href="/agendar">Agendar agora!</a>
                 </div>
             </div>
             <div class="right-main-content">
                 <img src="/static/images/object/modelo.png" alt="Modelo">
             </div>
         </section>
-        <section class="services-section">
+        <section id="services" class="services-section">
             <div class="background-shapes">
                 <!-- Faixas diagonais -->
                 <div class="diagonal-line"></div>
@@ -119,7 +133,7 @@
                 </div>
             </div>
         </section>
-        <section class="about-section">
+        <section id="about" class="about-section">
             <div class="about-title">
                 <div></div>
                 <h2>Sobre</h2>
@@ -154,7 +168,7 @@
                 </div>
             </div>
         </section>
-        <section class="contact-section">
+        <section id="contact" class="contact-section">
             <div class="contact-header">
                 <hr>
                 <h2>Contato</h2>

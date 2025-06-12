@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title>Agendar - Serviço</title></head>
+<body>
+    <h2>Escolha um Serviço</h2>
+    <form method="post">
+        {% for servico in servicos %}
+            <input type="radio" name="servico_id" value="{{ servico.id_tipo_servico }}" required> {{ servico.nome }}<br>
+        {% endfor %}
+        <br>
+        <a href="{{ url_for('agendar_espaco') }}">Voltar</a>
+        <button type="submit">Próximo</button>
+    </form>
+</body>
+</html>

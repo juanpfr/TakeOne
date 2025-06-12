@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title>Agendar - Equipamentos</title></head>
+<body>
+    <h2>Escolha Equipamentos</h2>
+    <form method="post">
+        {% for equipamento in equipamentos %}
+            <input type="checkbox" name="equipamentos" value="{{ equipamento.id_equipamento }}"> {{ equipamento.nome }}<br>
+        {% endfor %}
+        <br>
+        <a href="{{ url_for('agendar_funcionarios') }}">Voltar</a>
+        <button type="submit">Próximo</button>
+    </form>
+</body>
+</html>

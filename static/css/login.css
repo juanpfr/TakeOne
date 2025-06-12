@@ -1,0 +1,134 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #0d0d0d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.back-button a button {
+  background-color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 15px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.login-container {
+  background: linear-gradient(to bottom, #fff, #ddd);
+  padding: 40px 30px;
+  border-radius: 15px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.logo .box {
+  background: black;
+  color: white;
+  font-weight: bold;
+  padding: 10px 15px;
+  font-size: 20px;
+}
+
+.logo .brand {
+  background: black;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.social {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #999;
+  background-color: white;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.divider {
+  margin: 20px 0;
+  position: relative;
+  text-align: center;
+  font-weight: bold;
+  color: #555;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  height: 1px;
+  background: #aaa;
+  position: absolute;
+  top: 50%;
+  width: 40%;
+}
+
+.divider::before {
+  left: 0;
+}
+
+.divider::after {
+  right: 0;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+.login-btn {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 100%;
+  font-weight: bold;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.forgot-password {
+  font-size: 12px;
+  color: #333;
+}
+
+.forgot-password a {
+  color: black;
+  text-decoration: underline;
+}
+
+.flash-message {
+  margin-top: 10px;
+  color: red;
+  font-size: 14px;
+}
