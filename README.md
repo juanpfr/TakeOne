@@ -64,5 +64,6 @@ TakeOne/
 [@juanpfr](https://github.com/juanpfr)
 [@br7trindade](https://github.com/br7trindade)
 [@alissongaldino22](https://github.com/alissongaldino22)
+[@isabellaoliiveiiraa](https://github.com/isabellaoliiveiiraa)
 
 © 2025 - Projeto acadêmico para fins de aprendizado.
