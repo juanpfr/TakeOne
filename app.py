@@ -24,6 +24,154 @@ conn_str = (
 def index():
     return render_template('index.html')
 
+@app.route('/meus_agendamentos')
+def meus_agendamentos():
+    if 'id_cliente' not in session:
+        flash("Faça login para ver os agendamentos.", "erro")
+        return redirect(url_for('login'))
+    
+    try:
+        conn = pyodbc.connect(conn_str)
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT
+                a.id_agendamento,
+                a.data_hora_inicio,
+                a.status,
+
+                ts.nome AS tipo_servico,
+                ts.tempo_estimado_minutos,
+                c.nome AS categoria,
+
+                e.nome AS espaco,
+
+                eq.nome AS equipamento,
+                eq.descricao AS equipamento_descricao,
+                eq.em_manutencao,
+
+                f.nome AS funcionario,
+                f.funcao,
+                f.especialidade
+            FROM tbl_agendamento a
+            JOIN tbl_tipo_servico ts ON a.id_tipo_servico = ts.id_tipo_servico
+            JOIN tbl_categoria c ON ts.id_categoria = c.id_categoria
+            JOIN tbl_espaco e ON a.id_espaco = e.id_espaco
+
+            LEFT JOIN tbl_agendamento_equipamento ae ON a.id_agendamento = ae.id_agendamento
+            LEFT JOIN tbl_equipamento eq ON ae.id_equipamento = eq.id_equipamento
+
+            LEFT JOIN tbl_agendamento_funcionario af ON a.id_agendamento = af.id_agendamento
+            LEFT JOIN tbl_funcionario f ON af.id_funcionario = f.id_funcionario
+
+            WHERE a.id_cliente = ?
+            ORDER BY a.data_hora_inicio DESC;
+        """, (session['id_cliente'],))
+        
+        colunas = [col[0] for col in cursor.description]
+        resultados = [dict(zip(colunas, row)) for row in cursor.fetchall()]
+        conn.close()
+    except Exception as e:
+        return f"<h2>Erro ao carregar agendamentos:</h2><pre>{e}</pre>"
+
+    return render_template('agendamentos.html', agendamentos=resultados)
+
+# Página de meu perfil
+@app.route('/perfil', methods=['GET', 'POST'])
+def perfil():
+    if 'id_cliente' not in session:
+        flash("Faça login para acessar seu perfil.", "erro")
+        return redirect(url_for('login'))
+
+    try:
+        conn = pyodbc.connect(conn_str)
+        cursor = conn.cursor()
+
+        if request.method == 'POST':
+            nome = request.form['nome']
+            descricao = request.form['descricao']
+            cursor.execute("""
+                INSERT INTO tbl_equipamento_cliente (id_cliente, nome, descricao)
+                VALUES (?, ?, ?);
+            """, (session['id_cliente'], nome, descricao))
+            conn.commit()
+            flash("Equipamento adicionado com sucesso!", "sucesso")
+
+        # Dados do cliente
+        cursor.execute("""
+            SELECT nome, sobrenome, telefone, email
+            FROM tbl_cliente
+            WHERE id_cliente = ?;
+        """, (session['id_cliente'],))
+        cliente = cursor.fetchone()
+
+        # Equipamentos do cliente
+        cursor.execute("""
+            SELECT id_equipamento_cliente, nome, descricao
+            FROM tbl_equipamento_cliente
+            WHERE id_cliente = ?;
+        """, (session['id_cliente'],))
+        equipamentos = cursor.fetchall()
+
+        conn.close()
+
+    except Exception as e:
+        return f"<h2>Erro ao carregar perfil:</h2><pre>{e}</pre>"
+
+    return render_template("perfil.html", cliente=cliente, equipamentos=equipamentos)
+
+# excluir e editar
+@app.route('/excluir_equipamento/<int:id>', methods=['POST'])
+def excluir_equipamento(id):
+    if 'id_cliente' not in session:
+        return redirect(url_for('login'))
+
+    try:
+        conn = pyodbc.connect(conn_str)
+        cursor = conn.cursor()
+        cursor.execute("""
+            DELETE FROM tbl_equipamento_cliente
+            WHERE id_equipamento_cliente = ? AND id_cliente = ?;
+        """, (id, session['id_cliente']))
+        conn.commit()
+        conn.close()
+        flash("Equipamento excluído com sucesso!", "sucesso")
+    except Exception as e:
+        flash(f"Erro ao excluir equipamento: {e}", "erro")
+
+    return redirect(url_for('perfil'))
+
+
+@app.route('/editar_equipamento/<int:id>', methods=['GET', 'POST'])
+def editar_equipamento(id):
+    if 'id_cliente' not in session:
+        return redirect(url_for('login'))
+
+    conn = pyodbc.connect(conn_str)
+    cursor = conn.cursor()
+
+    if request.method == 'POST':
+        nome = request.form['nome']
+        descricao = request.form['descricao']
+        cursor.execute("""
+            UPDATE tbl_equipamento_cliente
+            SET nome = ?, descricao = ?
+            WHERE id_equipamento_cliente = ? AND id_cliente = ?;
+        """, (nome, descricao, id, session['id_cliente']))
+        conn.commit()
+        conn.close()
+        flash("Equipamento atualizado com sucesso!", "sucesso")
+        return redirect(url_for('perfil'))
+
+    cursor.execute("""
+        SELECT nome, descricao
+        FROM tbl_equipamento_cliente
+        WHERE id_equipamento_cliente = ? AND id_cliente = ?;
+    """, (id, session['id_cliente']))
+    equipamento = cursor.fetchone()
+    conn.close()
+
+    return render_template("editar_equipamento.html", equipamento=equipamento, id=id)
+
 # Página de login
 @app.route('/login', methods=['GET', 'POST'])
 def login():

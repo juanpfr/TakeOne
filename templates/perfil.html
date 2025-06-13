@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamentos</title>
+
+    <!-- Reset CSS -->
+    <link rel="stylesheet" href="/static/css/reset.css">
+
+    <!-- Fonte -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Manrope -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+
+    <!-- Styles CSS -->
+    <link rel="stylesheet" href="/static/css/index.css">
+</head>
+
+<body class="agendamento">
+    <header>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="feedback">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        <nav class="navbar">
+            <img src="/static/images/logos/takeone.png" alt="Logo Take One">
+            <ul>
+                <li><a href="/">Início</a></li>
+                <li><a href="#services">Serviços</a></li>
+                <li><a href="#about">Sobre</a></li>
+                <li><a href="/agendar">Agendamento</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+            <div>
+                {% if 'id_cliente' in session %}
+                <p>Bem-vindo(a), {{ session['nome'] }}!</p>
+                <div class="dropdown">
+                    <button class="dropbtn">▼</button>
+                    <div class="dropdown-content">
+                        <a href="/perfil">Meu Perfil</a>
+                        <a href="/meus-agendamentos">Agendamentos</a>
+                        <a href="/logout">Sair</a>
+                    </div>
+                </div>
+                {% else %}
+                <a href="/cadastro">Cadastre-se</a>
+                <a class="btn-login" href="/login">Login</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+    <section class="scheduling-section">
+    <h2>Meu Perfil</h2>
+
+    <!-- Tabela de dados do cliente -->
+    <div class="agendamento-container">
+        <table class="agendamento-tabela">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Sobrenome</th>
+                    <th>Telefone</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ cliente.nome }}</td>
+                    <td>{{ cliente.sobrenome }}</td>
+                    <td>{{ cliente.telefone }}</td>
+                    <td>{{ cliente.email }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 style="text-align: center; color: white; margin-top: 40px;">Meus Equipamentos</h2>
+
+    <!-- Tabela de equipamentos -->
+    <div class="agendamento-container">
+        <table class="agendamento-tabela">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for eq in equipamentos %}
+                <tr>
+                    <td>{{ eq.nome }}</td>
+                    <td>{{ eq.descricao }}</td>
+                    <td>
+                        <form action="{{ url_for('excluir_equipamento', id=eq.id_equipamento_cliente) }}" method="post" style="display:inline;">
+                            <button type="submit">Excluir</button>
+                        </form>
+                        <a href="{{ url_for('editar_equipamento', id=eq.id_equipamento_cliente) }}">
+                            <button>Editar</button>
+                        </a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3" style="text-align:center;">Nenhum equipamento cadastrado.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Formulário para adicionar equipamento -->
+    <div class="agendamento-container" style="margin-top: 40px;">
+        <h3 style="color: white; text-align: center;">Adicionar Equipamento</h3>
+        <form method="POST">
+            <input type="text" name="nome" placeholder="Nome do Equipamento" required>
+            <textarea name="descricao" placeholder="Descrição" rows="3" required></textarea>
+            <button type="submit">Adicionar</button>
+        </form>
+    </div>
+</section>
+
+
+
+    <footer class="footer-section">
+        <div class="footer-content">
+            <div class="footer-box">
+                <img src="/static/images/logos/takeone.png" alt="TakeOne Logo">
+                <p>TakeOne, texto legal maneiro sim ou claro, oloco sim sim, muito boa viu, boa legal sim,
+                    inacreditável!</p>
+            </div>
+            <div class="footer-box">
+                <h4>Agendamento simplificado</h4>
+                <p>TakeOne, texto legal maneiro sim ou claro, oloco sim sim, muito boa viu, boa legal sim,
+                    inacreditável!</p>
+            </div>
+            <div class="footer-box">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="/">Início</a></li>
+                    <li><a href="/">Serviços</a></li>
+                    <li><a href="/">Sobre</a></li>
+                    <li><a href="/">Agendamento</a></li>
+                    <li><a href="/">Contato</a></li>
+                    <li><a href="/">Login</a></li>
+                </ul>
+            </div>
+            <div class="footer-box">
+                <h4>Contatos</h4>
+                <ul>
+                    <li><a href="/">Whatsapp</a></li>
+                    <li><a href="/">Facebook</a></li>
+                    <li><a href="/">Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <div class="footer-bottom">
+        <p>© 2025 TakeOne. Todos os direitos reservados.</p>
+    </div>
+</body>
+
+</html>
