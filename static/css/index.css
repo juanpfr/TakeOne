@@ -650,11 +650,11 @@ body {
     color: #000000;
 }
 
-input,
-textarea {
+.contact-form input,
+.contact-form textarea {
     width: 90%;
     background-color: #dddddd;
-    border: none;
+    border: 2px black solid;
     border-radius: 12px;
     padding: 15px;
     font-family: inherit;
@@ -662,7 +662,8 @@ textarea {
     color: #000000;
 }
 
-textarea {
+.contact-form textarea {
+    width: 97%;
     resize: vertical;
     height: 150px;
 }
@@ -759,10 +760,20 @@ textarea {
 }
 
 .scheduling-section h2{
+    color: black;
     text-align: center;
     font-size: 3em;
-    color: black;
-    padding: 40px 0;
+    padding: 80px 0;
+}
+
+.scheduling-section th{
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.scheduling-section td{
+    font-size: 1.3em;
+    font-weight: 500;
 }
 
 .agendamento-container {
@@ -798,4 +809,100 @@ textarea {
 
 .agendamento-tabela tr:hover {
     background-color: #383838;
+}
+
+.equip-buttons{
+    display: flex;
+    gap: 20px;
+}
+
+.delete{
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border: 2px solid white;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+.delete:hover{
+    background-color: #8f0101;
+}
+
+.edit{
+    background-color: #ff8800;
+    color: rgb(255, 255, 255);
+    padding: 5px 10px;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+.edit:hover{
+    background-color: #816a00;
+}
+
+.equip-add{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 1200px;
+    width: 100%;
+    padding: 40px 0;
+}
+
+.equip-add h3{
+    color: black;
+    text-align: center;
+    font-size: 3em;
+    padding: 40px 0;
+}
+
+.equip-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.equip-form label{
+    color: black;
+    align-self: flex-start;
+    padding: 20px 10px;
+    font-weight: 800;
+    font-size: 2em;
+}
+
+.equip-form label:nth-child(3){
+    margin-top: 40px;
+}
+
+.equip-form input,
+.equip-form textarea{
+    width: 100%;
+    background-color: #202020;
+    color: white;
+    border: none;
+    font-size: 1.5em;
+    padding: 30px 15px;
+    border-radius: 12px;
+}
+
+.equip-form button{
+    padding: 10px 20px;
+    border: 2px solid black;
+    background-color: white;
+    margin-top: 40px;
+    border-radius: 25px;
+    font-size: 1.5em;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.equip-form button:hover{
+    background-color: #383838;
+    color: white;
 }

@@ -59,75 +59,14 @@
         </nav>
     </header>
     <section class="scheduling-section">
-        <h2>Minhas informações</h2>
-
-        <!-- Tabela de dados do cliente -->
-        <div class="agendamento-container">
-            <table class="agendamento-tabela">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Sobrenome</th>
-                        <th>Telefone</th>
-                        <th>Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ cliente.nome }}</td>
-                        <td>{{ cliente.sobrenome }}</td>
-                        <td>{{ cliente.telefone }}</td>
-                        <td>{{ cliente.email }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h2>Meus Equipamentos</h2>
-
-        <!-- Tabela de equipamentos -->
-        <div class="agendamento-container">
-            <table class="agendamento-tabela">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for eq in equipamentos %}
-                    <tr>
-                        <td>{{ eq.nome }}</td>
-                        <td>{{ eq.descricao }}</td>
-                        <td class="equip-buttons">
-                            <form action="{{ url_for('excluir_equipamento', id=eq.id_equipamento_cliente) }}"
-                                method="post" style="display:inline;">
-                                <button class="delete" type="submit">Excluir</button>
-                            </form>
-                            <a href="{{ url_for('editar_equipamento', id=eq.id_equipamento_cliente) }}">
-                                <button class="edit">Editar</button>
-                            </a>
-                        </td>
-                    </tr>
-                    {% else %}
-                    <tr>
-                        <td colspan="3" style="text-align:center;">Nenhum equipamento cadastrado.</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Formulário para adicionar equipamento -->
         <div class="equip-add">
-            <h3>Adicionar Equipamento</h3>
+            <h3>Editar Equipamento</h3>
             <form class="equip-form" method="POST">
-                <label for="nome-equipamento">Nome do Equipamento</label>
-                <input type="text" name="nome" placeholder="Nome do Equipamento" required>
-                <label for="desc-equipamento">Descrição do Equipamento</label>
-                <textarea name="descricao" placeholder="Descrição" rows="3" required></textarea>
-                <button  type="submit">Adicionar</button>
+                <label for="nome">Nome do Equipamento</label>
+                <input type="text" name="nome" id="nome" placeholder="Nome do Equipamento" value="{{ equipamento.nome }}" required>
+                <label for="descricao">Descrição do Equipamento</label>
+                <textarea name="descricao" id="descricao" placeholder="Descrição" rows="3" required>{{ equipamento.descricao }}</textarea>
+                <button  type="submit">Salvar Alterações</button>
             </form>
         </div>
     </section>

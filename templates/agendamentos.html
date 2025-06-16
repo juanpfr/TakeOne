@@ -47,7 +47,7 @@
                     <button class="dropbtn">▼</button>
                     <div class="dropdown-content">
                         <a href="/perfil">Meu Perfil</a>
-                        <a href="/meus-agendamentos">Agendamentos</a>
+                        <a href="/meus_agendamentos">Agendamentos</a>
                         <a href="/logout">Sair</a>
                     </div>
                 </div>
@@ -72,12 +72,6 @@
                         <th>Duração</th>
                         <th>Categoria</th>
                         <th>Espaço</th>
-                        <th>Equipamento</th>
-                        <th>Descrição</th>
-                        <th>Manutenção</th>
-                        <th>Funcionário</th>
-                        <th>Função</th>
-                        <th>Especialidade</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -90,12 +84,6 @@
                         <td>{{ ag.tempo_estimado_minutos }} min</td>
                         <td>{{ ag.categoria }}</td>
                         <td>{{ ag.espaco }}</td>
-                        <td>{{ ag.equipamento or '-' }}</td>
-                        <td>{{ ag.equipamento_descricao or '-' }}</td>
-                        <td>{{ ag.em_manutencao or '-' }}</td>
-                        <td>{{ ag.funcionario or '-' }}</td>
-                        <td>{{ ag.funcao or '-' }}</td>
-                        <td>{{ ag.especialidade or '-' }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
