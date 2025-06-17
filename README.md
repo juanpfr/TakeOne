@@ -57,6 +57,7 @@ TakeOne/
 ├── requirements.txt     # Dependências do projeto
 ├── templates/           # Templates HTML Jinja2 (não listado aqui)
 ├── static/              # Arquivos estáticos (CSS, JS, imagens)
+├── docs/                # Arquivos de documentação do projeto
 ```
 
 ## 👥 Autores
